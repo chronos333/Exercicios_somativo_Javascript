@@ -1,34 +1,48 @@
 <!DOCTYPE html>
+<!-- Define que o documento usa HTML5 -->
+
 <html lang="pt-br">
+<!-- Define o idioma da página como português do Brasil -->
+
 <head>
     <meta charset="UTF-8">
+    <!-- Permite usar acentos e caracteres especiais -->
+
     <title>Lâmpada JS</title>
+    <!-- Título da página que aparece na aba do navegador -->
+
     <style>
+        /* Estilização geral da página */
         body {
-            background-color: #1a1a1a;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            transition: background 0.4s;
+            background-color: #1a1a1a; /* Fundo escuro */
+            color: white; /* Cor do texto */
+            text-align: center; /* Centraliza o texto */
+            font-family: Arial, sans-serif; /* Fonte usada */
+            transition: background 0.4s; /* Animação suave no fundo */
+
+            /* Centralização total da página */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
+
+            height: 100vh; /* Altura total da tela */
+            margin: 0; /* Remove margem padrão */
         }
 
+        /* Estilo da lâmpada */
         #lampada {
             width: 120px;
             height: 120px;
-            background-color: #444;
-            border-radius: 50%;
-            cursor: pointer;
+            background-color: #444; /* Cor quando apagada */
+            border-radius: 50%; /* Deixa o formato redondo */
+            cursor: pointer; /* Mostra que é clicável */
             border: 4px solid #333;
             position: relative;
-            transition: 0.3s;
+            transition: 0.3s; /* Animação suave */
         }
 
+        /* Parte de baixo da lâmpada (soquete) */
         #lampada::after {
             content: "";
             width: 40px;
@@ -41,23 +55,27 @@
             border-radius: 0 0 5px 5px;
         }
 
+        /* Classe usada quando a lâmpada está acesa */
         .acesa {
-            background-color: #ffcc00 !important;
-            box-shadow: 0 0 60px #ffcc00;
+            background-color: #ffcc00 !important; /* Cor amarela */
+            box-shadow: 0 0 60px #ffcc00; /* Efeito de brilho */
             border-color: #fff !important;
         }
 
+        /* Classe usada quando a lâmpada está quebrada */
         .quebrada {
             background-color: #000 !important;
-            opacity: 0.3;
+            opacity: 0.3; /* Deixa ela mais transparente */
             border: 4px dashed #777 !important;
-            cursor: not-allowed !important;
+            cursor: not-allowed !important; /* Mostra que não pode clicar */
         }
 
+        /* Área dos botões */
         .controles {
             margin-top: 60px;
         }
 
+        /* Estilo geral dos botões */
         button {
             padding: 10px 20px;
             margin: 5px;
@@ -67,41 +85,84 @@
             font-weight: bold;
         }
 
-        .btn-break { background-color: #e74c3c; color: white; }
-        .btn-fix { background-color: #2ecc71; color: white; }
+        /* Botão quebrar */
+        .btn-break { 
+            background-color: #e74c3c; 
+            color: white; 
+        }
+
+        /* Botão consertar */
+        .btn-fix { 
+            background-color: #2ecc71; 
+            color: white; 
+        }
     </style>
 </head>
+
 <body>
 
+    <!-- Título exibido na página -->
     <h1>Lâmpada Interativa</h1>
     
+    <!-- Div que representa a lâmpada -->
+    <!-- Quando clicada chama a função alternar() -->
     <div id="lampada" onclick="alternar()"></div>
 
+    <!-- Área onde ficam os botões -->
     <div class="controles">
+
+        <!-- Botão que quebra a lâmpada -->
         <button class="btn-break" onclick="quebrar()">Quebrar</button>
+
+        <!-- Botão que conserta a lâmpada -->
         <button class="btn-fix" onclick="consertar()">Consertar</button>
+
     </div>
 
     <script>
+        // Seleciona o elemento da lâmpada no HTML
         const lamp = document.getElementById('lampada');
+
+        // Variável que controla se a lâmpada está quebrada
         let estaQuebrada = false;
 
+        // Função que liga ou desliga a lâmpada
         function alternar() {
+
+            // Se estiver quebrada, não faz nada
             if (estaQuebrada) return;
+
+            // Alterna a classe "acesa"
+            // Se estiver apagada liga, se estiver ligada apaga
             lamp.classList.toggle('acesa');
         }
 
+        // Função que quebra a lâmpada
         function quebrar() {
+
+            // Marca a lâmpada como quebrada
             estaQuebrada = true;
+
+            // Remove a classe acesa (apaga a luz)
             lamp.classList.remove('acesa');
+
+            // Adiciona a classe quebrada
             lamp.classList.add('quebrada');
         }
 
+        // Função que conserta a lâmpada
         function consertar() {
+
+            // Define que ela não está mais quebrada
             estaQuebrada = false;
+
+            // Remove o estado quebrado
             lamp.classList.remove('quebrada');
+
+            // Remove também a classe acesa (volta apagada)
             lamp.classList.remove('acesa');
         }
     </script>
+
 </body>
 </html>
