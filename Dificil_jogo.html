@@ -7,49 +7,36 @@
 </head>
 
 <style>
-
-*,
-*::before,
-*::after {
+/* Reset básico e definição de fonte global */
+*, *::before, *::after {
     box-sizing: border-box;
-    font-family: 'Poppins'   
+    font-family: 'Poppins', sans-serif;
 }
+
+/* Estilização do corpo: fundo com gradientes para um visual moderno/dark */
 body {
     margin: 0;
     background:
         radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 32%),
         radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.12), transparent 28%),
         linear-gradient(180deg, #0b1226 0%, #0f1729 60%, #0b1226 100%);
-    color: var(--text-primary);
+    color: white;
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-main {
-    padding-top: 6rem;
-}
-
-h1 {
-    font-size: 58px;
-    color: white;
+/* Centralização dos textos principais */
+h1, h3, h4 {
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
+h1 { font-size: 58px; }
+h3 { font-size: 36px; }
 
+/* Container que alinha os botões lado a lado */
 .container-opcoes {
     display: flex;
     justify-content: center;
@@ -57,10 +44,10 @@ h1 {
     margin-top: 30px;
 }
 
+/* Estilização dos botões para remover bordas e adicionar efeito de zoom no hover */
 button {
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -74,90 +61,102 @@ button img {
     height: auto;
 }
 
-h3 {
-    font-size: 36px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
+/* Área onde o texto do resultado será inserido via JavaScript */
 h4 {
-    display: flex;
     font-size: 24px;
-    text-align: center;
-    align-items: center;
-    margin: 0 auto 10;
-    color: white;
-    justify-content: center;
+    margin-top: 40px;
 }
-
-
 </style>
 
 <body>
     <h1>Bem vindo ao jogo PEDRA, PAPEL E TESOURA!</h1>
     <h3>Escolha sua opção:</h3>
-<div class="container-opcoes">
-    <button id="pedra"><img src="PEDRA.png" alt="pedra"></button>
-    <button id="papel"><img src="PAPEL.PNG" alt="papel"></button>
-    <button id="tesoura"><img src="TESOURA.PNG" alt="tesoura"></button>
-</div>
 
-<h4>Resultado: </h4>
+    <div class="container-opcoes">
+        <button id="pedra"><img src="PEDRA.png" alt="pedra"></button>
+        <button id="papel"><img src="PAPEL.PNG" alt="papel"></button>
+        <button id="tesoura"><img src="TESOURA.PNG" alt="tesoura"></button>
+    </div>
 
-</body>
+    <h4>Resultado: </h4>
 
 <script>
-const botoes = document.querySelectorAll('button');
-const displayResultado = document.querySelector('h4');
+// --- Seleção de Elementos do DOM ---
+const botoes = document.querySelectorAll('button'); // Captura todos os botões de escolha
+const displayResultado = document.querySelector('h4'); // Onde exibiremos o texto final
 
+// Lista de opções possíveis para facilitar a lógica do computador
 const opcoes = ['pedra', 'papel', 'tesoura'];
 
+// --- Gerenciamento de Eventos ---
+// Adiciona um evento de clique para cada botão individualmente
 botoes.forEach(botao => {
     botao.addEventListener('click', () => {
-        const escolhaUsuario = botao.id;
-        const escolhaComputador = gerarEscolhaComputador();
+        const escolhaUsuario = botao.id; // Pega o ID (pedra, papel ou tesoura)
+        const escolhaComputador = gerarEscolhaComputador(); // Sorteia a jogada do PC
         
+        // Busca os emojis correspondentes às escolhas
         const emojiUser = retornarEmoji(escolhaUsuario);
         const emojiPC = retornarEmoji(escolhaComputador);
         
+        // Calcula quem venceu a rodada
         const statusWin = determinarVencedor(escolhaUsuario, escolhaComputador);
         
+        // Atualiza a interface com as informações processadas
         exibirResultado(escolhaUsuario, escolhaComputador, statusWin, emojiUser, emojiPC);
     });
 });
 
+// --- Funções de Lógica ---
+
+/**
+ * Converte a string de escolha em um emoji visual.
+ * @param {string} escolha - A jogada feita.
+ */
 function retornarEmoji(escolha) {
     if (escolha === 'pedra') return "🪨";
     if (escolha === 'papel') return "📄";
     if (escolha === 'tesoura') return "✂️";
 }
 
+/**
+ * Gera uma escolha aleatória para o computador baseada no array 'opcoes'.
+ */
 function gerarEscolhaComputador() {
-    const indiceAleatorio = Math.floor(Math.random() * 3);
+    const indiceAleatorio = Math.floor(Math.random() * 3); // Gera 0, 1 ou 2
     return opcoes[indiceAleatorio];
 }
 
+/**
+ * Compara as jogadas e define o estado da partida.
+ */
 function determinarVencedor(usuario, computador) {
+    // Caso de empate: escolhas idênticas
     if (usuario === computador) return "Empate! 🤝";
     
+    // Regras de vitória do usuário
     if (
-        (usuario === 'pedra' && computador === 'tesoura') ||
-        (usuario === 'papel' && computador === 'pedra') ||
-        (usuario === 'tesoura' && computador === 'papel')
+        (usuario === 'pedra' && computador === 'tesoura') || // Pedra vence Tesoura
+        (usuario === 'papel' && computador === 'pedra') ||   // Papel vence Pedra
+        (usuario === 'tesoura' && computador === 'papel')    // Tesoura vence Papel
     ) {
         return "Você Venceu! 🎉";
     } else {
+        // Se não empatou nem ganhou, o usuário perdeu
         return "Você Perdeu! 😢";
     }
 }
 
+/**
+ * Atualiza o conteúdo HTML da página para mostrar o resultado final.
+ */
 function exibirResultado(user, pc, res, emojuser, emojpc) {
     displayResultado.innerHTML = `
-        Sua escolha: ${user.toUpperCase()} ${emojuser} | 
-        Computador: ${pc.toUpperCase()} ${emojpc} |
-        ${res}
+        Sua escolha: <strong>${user.toUpperCase()}</strong> ${emojuser} | 
+        Computador: <strong>${pc.toUpperCase()}</strong> ${emojpc} | 
+        <br><span>${res}</span>
     `;
 }
 </script>
+</body>
 </html>
