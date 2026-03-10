@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo - Pedra, Papel e Tesoura</title>
+</head>
+
+<style>
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    font-family: 'Poppins'   
+}
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 32%),
+        radial-gradient(circle at 80% 10%, rgba(245, 158, 11, 0.12), transparent 28%),
+        linear-gradient(180deg, #0b1226 0%, #0f1729 60%, #0b1226 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+main {
+    padding-top: 6rem;
+}
+
+h1 {
+    font-size: 58px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.container-opcoes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+button img {
+    width: 200px;
+    height: auto;
+}
+
+h3 {
+    font-size: 36px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+h4 {
+    display: flex;
+    font-size: 24px;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto 10;
+    color: white;
+    justify-content: center;
+}
+
+
+</style>
+
+<body>
+    <h1>Bem vindo ao jogo PEDRA, PAPEL E TESOURA!</h1>
+    <h3>Escolha sua opção:</h3>
+<div class="container-opcoes">
+    <button id="pedra"><img src="PEDRA.png" alt="pedra"></button>
+    <button id="papel"><img src="PAPEL.PNG" alt="papel"></button>
+    <button id="tesoura"><img src="TESOURA.PNG" alt="tesoura"></button>
+</div>
+
+<h4>Resultado: </h4>
+
+</body>
+
+<script>
+const botoes = document.querySelectorAll('button');
+const displayResultado = document.querySelector('h4');
+
+const opcoes = ['pedra', 'papel', 'tesoura'];
+
+botoes.forEach(botao => {
+    botao.addEventListener('click', () => {
+        const escolhaUsuario = botao.id;
+        const escolhaComputador = gerarEscolhaComputador();
+        
+        const emojiUser = retornarEmoji(escolhaUsuario);
+        const emojiPC = retornarEmoji(escolhaComputador);
+        
+        const statusWin = determinarVencedor(escolhaUsuario, escolhaComputador);
+        
+        exibirResultado(escolhaUsuario, escolhaComputador, statusWin, emojiUser, emojiPC);
+    });
+});
+
+function retornarEmoji(escolha) {
+    if (escolha === 'pedra') return "🪨";
+    if (escolha === 'papel') return "📄";
+    if (escolha === 'tesoura') return "✂️";
+}
+
+function gerarEscolhaComputador() {
+    const indiceAleatorio = Math.floor(Math.random() * 3);
+    return opcoes[indiceAleatorio];
+}
+
+function determinarVencedor(usuario, computador) {
+    if (usuario === computador) return "Empate! 🤝";
+    
+    if (
+        (usuario === 'pedra' && computador === 'tesoura') ||
+        (usuario === 'papel' && computador === 'pedra') ||
+        (usuario === 'tesoura' && computador === 'papel')
+    ) {
+        return "Você Venceu! 🎉";
+    } else {
+        return "Você Perdeu! 😢";
+    }
+}
+
+function exibirResultado(user, pc, res, emojuser, emojpc) {
+    displayResultado.innerHTML = `
+        Sua escolha: ${user.toUpperCase()} ${emojuser} | 
+        Computador: ${pc.toUpperCase()} ${emojpc} |
+        ${res}
+    `;
+}
+</script>
+</html>
