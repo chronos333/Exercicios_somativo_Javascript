@@ -15,6 +15,8 @@ Enquanto o botão 'btn-break' for clicado, o estado da lâmpada vai mudar para '
 Enquanto o botão 'btn-break' não for clicado ou o botão 'btn-fix' for clicado, o estado da lâmpada vai alterar-se de 'estaQuebrada' para 'false', mantendo ela funcional.
 
 ***
+***
+
 # Semáforo
 
 ## button
@@ -34,3 +36,7 @@ Executa a função 'apagar()' e redefine somente a cor do botão com [id="verde"
 
 ### automatico ()
 Executa a função 'vermelho()', depois a função 'verde()' após 2 segundos após o clique, depois a função 'amarelo()' após mais 2 segundos e a função 'vermelho()' após mais 2 segundos.
+
+***
+***
+
