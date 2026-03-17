@@ -74,7 +74,7 @@ Vai receber o valor da decisão do usuário e o valor sorteado pelo computador, 
   - "Você Perdeu! 😢"
     Caso nenhuma das opções anteriores sejam verdadeiras;
 
-### exibirResultado
+### exibirResultado()
 Uma função que recebe os valores de:
 - Decisão do usuário e do computador --> 'user' e 'pc';
 - Emoji atribuído através da função 'retornarEmoji' --> usando como 'emojuser' e 'emojpc';
