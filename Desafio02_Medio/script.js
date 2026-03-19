@@ -1,59 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Semáforo</title>
-<link rel="stylesheet" href="style.css">
-<style>
-    body{
-        text-align:center;
-        font-family:Arial;
-    }
-
-    /* Estrutura do semáforo */
-    #semaforo{
-        width:100px;
-        background:black;
-        padding:20px;
-        margin:auto;
-        border-radius:10px;
-    }
-
-    /* Estilo das luzes */
-    .luz{
-        width:60px;
-        height:60px;
-        background:#333;
-        border-radius:50%;
-        margin:10px auto;
-    }
-
-    /* Estilo dos botões */
-    button{
-        padding:10px;
-        margin:5px;
-        font-size:16px;
-    }
-</style>
-</head>
-<body>
-<h1>Semáforo</h1>
-<div id="semaforo">
-    <div id="vermelho" class="luz"></div>
-    <div id="amarelo" class="luz"></div>
-    <div id="verde" class="luz"></div>
-</div>
-    
-<br>
-    
-<!-- Botões que controlam o semáforo -->  
-<button onclick="vermelho()">Vermelho</button>
-<button onclick="amarelo()">Amarelo</button>
-<button onclick="verde()">Verde</button>
-<button onclick="automatico()">Automático</button>
-
-</body>
-<script>
     /* Função que apaga todas as luzes */
     function apagar(){
 
@@ -112,6 +56,3 @@
         // após 6 segundos volta para o vermelho
 
     }
-
-</script>
-</html>
